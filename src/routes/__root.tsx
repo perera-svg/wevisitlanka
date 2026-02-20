@@ -6,7 +6,7 @@ import Header from "../components/Header";
 
 import WorkOSProvider from "../integrations/workos/provider";
 import appCss from "../styles.css?url";
-
+// import { useUser } from "../hooks/useUser";
 export const Route = createRootRoute({
   head: () => ({
     meta: [
