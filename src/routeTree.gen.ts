@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DemoWorkosRouteImport } from './routes/demo/workos'
+import { Route as DemoSentryTestingRouteImport } from './routes/demo/sentry.testing'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,31 +23,40 @@ const DemoWorkosRoute = DemoWorkosRouteImport.update({
   path: '/demo/workos',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DemoSentryTestingRoute = DemoSentryTestingRouteImport.update({
+  id: '/demo/sentry/testing',
+  path: '/demo/sentry/testing',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/demo/workos': typeof DemoWorkosRoute
+  '/demo/sentry/testing': typeof DemoSentryTestingRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/demo/workos': typeof DemoWorkosRoute
+  '/demo/sentry/testing': typeof DemoSentryTestingRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/demo/workos': typeof DemoWorkosRoute
+  '/demo/sentry/testing': typeof DemoSentryTestingRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/demo/workos'
+  fullPaths: '/' | '/demo/workos' | '/demo/sentry/testing'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/demo/workos'
-  id: '__root__' | '/' | '/demo/workos'
+  to: '/' | '/demo/workos' | '/demo/sentry/testing'
+  id: '__root__' | '/' | '/demo/workos' | '/demo/sentry/testing'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DemoWorkosRoute: typeof DemoWorkosRoute
+  DemoSentryTestingRoute: typeof DemoSentryTestingRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +75,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DemoWorkosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/demo/sentry/testing': {
+      id: '/demo/sentry/testing'
+      path: '/demo/sentry/testing'
+      fullPath: '/demo/sentry/testing'
+      preLoaderRoute: typeof DemoSentryTestingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DemoWorkosRoute: DemoWorkosRoute,
+  DemoSentryTestingRoute: DemoSentryTestingRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
