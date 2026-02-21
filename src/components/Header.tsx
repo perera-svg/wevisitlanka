@@ -61,6 +61,32 @@ export default function Header() {
 
 					{/* Demo Links Start */}
 
+					<Link
+						to="/demo/sentry/testing"
+						onClick={() => setIsOpen(false)}
+						className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
+						activeProps={{
+							className:
+								"flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2",
+						}}
+					>
+						<Globe size={20} />
+						<span className="font-medium">Sentry</span>
+					</Link>
+
+					<Link
+						to="/demo/workos"
+						onClick={() => setIsOpen(false)}
+						className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
+						activeProps={{
+							className:
+								"flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2",
+						}}
+					>
+						<CircleUserRound size={20} />
+						<span className="font-medium">WorkOS</span>
+					</Link>
+
 					{/* Demo Links End */}
 				</nav>
 
