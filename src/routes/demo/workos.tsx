@@ -1,13 +1,13 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useAuth } from "@workos-inc/authkit-react";
+import { createFileRoute } from '@tanstack/react-router'
+import { useAuth } from '@workos-inc/authkit-react'
 
-export const Route = createFileRoute("/demo/workos")({
+export const Route = createFileRoute('/demo/workos')({
   ssr: false,
   component: App,
-});
+})
 
 function App() {
-  const { user, isLoading, signIn, signOut } = useAuth();
+  const { user, isLoading, signIn, signOut } = useAuth()
 
   if (isLoading) {
     return (
@@ -16,7 +16,7 @@ function App() {
           <p className="text-gray-400 text-center">Loading...</p>
         </div>
       </div>
-    );
+    )
   }
 
   if (user) {
@@ -45,14 +45,14 @@ function App() {
                 <label className="text-gray-400 text-sm font-medium block mb-1">
                   First Name
                 </label>
-                <p className="text-white text-lg">{user.firstName || "N/A"}</p>
+                <p className="text-white text-lg">{user.firstName || 'N/A'}</p>
               </div>
 
               <div className="bg-gray-700/30 rounded-lg p-4 border border-gray-600/30">
                 <label className="text-gray-400 text-sm font-medium block mb-1">
                   Last Name
                 </label>
-                <p className="text-white text-lg">{user.lastName || "N/A"}</p>
+                <p className="text-white text-lg">{user.lastName || 'N/A'}</p>
               </div>
 
               <div className="bg-gray-700/30 rounded-lg p-4 border border-gray-600/30">
@@ -60,7 +60,7 @@ function App() {
                   Email
                 </label>
                 <p className="text-white text-lg break-all">
-                  {user.email || "N/A"}
+                  {user.email || 'N/A'}
                 </p>
               </div>
 
@@ -69,7 +69,7 @@ function App() {
                   User ID
                 </label>
                 <p className="text-gray-300 text-sm font-mono break-all">
-                  {user.id || "N/A"}
+                  {user.id || 'N/A'}
                 </p>
               </div>
             </div>
@@ -84,7 +84,7 @@ function App() {
           </div>
         </div>
       </div>
-    );
+    )
   }
 
   return (
@@ -105,5 +105,5 @@ function App() {
         </button>
       </div>
     </div>
-  );
+  )
 }

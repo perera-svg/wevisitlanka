@@ -39,6 +39,11 @@ If you prefer not to use Tailwind CSS:
 4. Uninstall the packages: `bun install @tailwindcss/vite tailwindcss -D`
 
 
+## Setting up WorkOS
+
+- Set the `VITE_WORKOS_CLIENT_ID` in your `.env.local`.
+
+
 
 ## Routing
 
