@@ -26,7 +26,9 @@ export function getRouter() {
       replaysOnErrorSampleRate: 1.0,
     });
   } else {
-    console.warn("VITE_SENTRY_DSN is not defined. Sentry is not running. on client");
+    console.warn(
+      "VITE_SENTRY_DSN is not defined. Sentry is not running on client.",
+    );
   }
 
   return router;

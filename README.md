@@ -41,10 +41,47 @@ If you prefer not to use Tailwind CSS:
 
 ## Setting up WorkOS
 
-- Set the `VITE_WORKOS_CLIENT_ID` in your `.env.local`.
+To enable authentication and other features powered by WorkOS, you’ll need to configure a few environment variables and set up a project in the WorkOS dashboard.
+
+1. **Create / configure a WorkOS project**
+   - Go to the [WorkOS Dashboard](https://dashboard.workos.com/) and create a new project (or select an existing one).
+   - In your project, locate the **Client ID** (often under “Configuration” or “API Keys”).
+   - If your app uses the WorkOS API directly, also locate your **API Key** and, if applicable, any **Webhook Secret** values.
+
+2. **Set environment variables**
+   Create (or update) a `.env.local` file in the root of the project and add:
+
+   ```bash
+   # Public client identifier used by the frontend
+   VITE_WORKOS_CLIENT_ID=<your-workos-client-id>
+
+   # If your app uses server-side WorkOS calls, you may also need:
+   # WORKOS_API_KEY=<your-workos-api-key>
+   # WORKOS_WEBHOOK_SECRET=<your-workos-webhook-secret>
+   ```
+
+3. **Configure redirect URLs**
+   - In the WorkOS Dashboard, configure the OAuth / Redirect URLs to point to your application’s callback route (for example, `http://localhost:3000/callback` in development).
+   - Make sure this value matches whatever redirect URL is used in your application’s WorkOS integration.
 
 
+## Setting up Sentry
 
+This project includes Sentry for error monitoring. To enable it in your environment:
+
+1. Create a Sentry account and a new project at [sentry.io](https://sentry.io/).
+2. In the Sentry project settings, find your **DSN**.
+3. Add the following environment variables to your `.env.local`:
+
+   ```bash
+   # Sentry connection string
+   SENTRY_DSN=<your-sentry-dsn>
+
+   # Optional: environment name used to tag events (e.g. development, staging, production)
+   SENTRY_ENVIRONMENT=development
+   ```
+
+Once these variables are set, Sentry will start capturing errors and performance data according to the project’s Sentry configuration.
 ## Routing
 
 This project uses [TanStack Router](https://tanstack.com/router) with file-based routing. Routes are managed as files in `src/routes`.
