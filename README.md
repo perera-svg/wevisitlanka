@@ -57,10 +57,10 @@ If a commit is blocked, fix it with this flow:
 
 ```bash
 # 1) See all current issues in the repo
-bun run check
+bun --bun run check
 
 # 2) Apply formatting fixes
-bun run format --write
+bun --bun run format --write
 
 # 3) Stage fixes and commit again
 git add -A
