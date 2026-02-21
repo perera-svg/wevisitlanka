@@ -1,9 +1,12 @@
-import * as Sentry from '@sentry/tanstackstart-react'
+import * as Sentry from "@sentry/tanstackstart-react";
 
-const sentryDsn = import.meta.env?.VITE_SENTRY_DSN ?? process.env.VITE_SENTRY_DSN
+const sentryDsn =
+  import.meta.env?.VITE_SENTRY_DSN ?? process.env.VITE_SENTRY_DSN;
+const sentryEnvironment =
+  import.meta.env?.ENVIRONMENT ?? process.env.ENVIRONMENT ?? "development";
 
 if (!sentryDsn) {
-  console.warn('VITE_SENTRY_DSN is not defined. Sentry is not running.')
+  console.warn("VITE_SENTRY_DSN is not defined. Sentry is not running.");
 } else {
   Sentry.init({
     dsn: sentryDsn,
@@ -13,5 +16,6 @@ if (!sentryDsn) {
     tracesSampleRate: 1.0,
     replaysSessionSampleRate: 1.0,
     replaysOnErrorSampleRate: 1.0,
-  })
+    environment: sentryEnvironment,
+  });
 }

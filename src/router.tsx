@@ -4,6 +4,8 @@ import { routeTree } from "./routeTree.gen";
 
 const sentryDsn =
   import.meta.env?.VITE_SENTRY_DSN ?? process.env.VITE_SENTRY_DSN;
+const sentryEnvironment =
+  import.meta.env?.ENVIRONMENT ?? process.env.ENVIRONMENT ?? "development";
 
 const initSentryClient = createClientOnlyFn(async () => {
   if (!sentryDsn) {
@@ -22,6 +24,7 @@ const initSentryClient = createClientOnlyFn(async () => {
     tracesSampleRate: 1.0,
     replaysSessionSampleRate: 1.0,
     replaysOnErrorSampleRate: 1.0,
+    environment: sentryEnvironment,
   });
 });
 
