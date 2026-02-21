@@ -11,6 +11,9 @@
     "preview": "vite preview",
     "test": "vitest run",
     "deploy": "bun run build && wrangler deploy",
+    "format": "biome format",
+    "lint": "biome lint",
+    "check": "biome check",
     "start": "node --import ./dist/server/instrument.server.mjs dist/server/index.mjs"
   },
   "dependencies": {
@@ -44,6 +47,7 @@
     "vite": "^7.1.7",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.0.5",
-    "wrangler": "^4.40.3"
+    "wrangler": "^4.40.3",
+    "@biomejs/biome": "2.2.4"
   }
 }
