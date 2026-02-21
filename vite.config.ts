@@ -9,9 +9,9 @@ import viteReact from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import { cloudflare } from "@cloudflare/vite-plugin";
 
-const project =
+const sentryProject =
   import.meta.env?.VITE_SENTRY_PROJECT ?? process.env.VITE_SENTRY_PROJECT;
-if (!project) {
+if (!sentryProject) {
   throw new Error(
     "VITE_SENTRY_PROJECT is not defined. Please set it in your .env file.",
   );
@@ -45,7 +45,7 @@ const config = defineConfig({
     // other plugins - sentryTanstackStart should be last
     sentryTanstackStart({
       org: sentryOrg,
-      project: project,
+      project: sentryProject,
       authToken: sentryAuthToken,
     }),
   ],
