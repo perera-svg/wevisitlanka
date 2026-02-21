@@ -49,6 +49,26 @@ bun --bun run format
 bun --bun run check
 ```
 
+## Git Workflow: Pre-commit Biome Check
+
+This project runs `biome check` on staged files during `git commit` using Husky + lint-staged.
+
+If a commit is blocked, fix it with this flow:
+
+```bash
+# 1) See all current issues in the repo
+bun --bun run check
+
+# 2) Apply formatting fixes
+bun --bun run format --write
+
+# 3) Stage fixes and commit again
+git add -A
+git commit
+```
+
+If issues still remain after formatting, update the reported files manually, then run `bun run check` again and commit.
+
 
 ## Setting up WorkOS
 
