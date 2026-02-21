@@ -20,6 +20,7 @@ jobs:
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
       VITE_WORKOS_CLIENT_ID: ${{ secrets.VITE_WORKOS_CLIENT_ID }}
       VITE_WORKOS_API_HOSTNAME: ${{ secrets.VITE_WORKOS_API_HOSTNAME }}
+      VITE_SENTRY_DSN: ${{ secrets.VITE_SENTRY_DSN }}
 
     steps:
       - name: Checkout code
