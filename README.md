@@ -25,6 +25,23 @@ This project uses [Vitest](https://vitest.dev/) for testing. You can run the tes
 bun --bun run test
 ```
 
+## E2E Testing (Playwright)
+
+Install Playwright browsers and system dependencies:
+
+```bash
+bunx playwright install --with-deps
+```
+
+Run end-to-end tests:
+
+```bash
+bun --bun run e2e
+bun --bun run e2e:ui
+bun --bun run e2e:headed
+bun --bun run e2e:report
+```
+
 ## Styling
 
 This project uses [Tailwind CSS](https://tailwindcss.com/) for styling.
