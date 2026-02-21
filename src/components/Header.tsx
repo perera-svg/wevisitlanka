@@ -1,7 +1,9 @@
 import { Link } from '@tanstack/react-router'
 
+import WorkOSHeader from './workos-user.tsx'
+
 import { useState } from 'react'
-import { Home, Menu, X } from 'lucide-react'
+import { CircleUserRound, Globe, Home, Menu, X } from 'lucide-react'
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
@@ -61,6 +63,10 @@ export default function Header() {
 
           {/* Demo Links End */}
         </nav>
+
+        <div className="p-4 border-t border-gray-700 bg-gray-800 flex flex-col gap-2">
+          <WorkOSHeader />
+        </div>
       </aside>
     </>
   )
