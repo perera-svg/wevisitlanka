@@ -75,7 +75,7 @@ This project includes Sentry for error monitoring. To enable it in your environm
 
    ```bash
    # Sentry connection string (required)
-   SENTRY_DSN=<your-sentry-dsn>
+   VITE_SENTRY_DSN=<your-sentry-dsn>
 
    # Sentry organization and project used by the Vite/Sentry integration (required)
    VITE_SENTRY_ORG=<your-sentry-org-slug>
