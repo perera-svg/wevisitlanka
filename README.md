@@ -70,13 +70,19 @@ To enable authentication and other features powered by WorkOS, you’ll need to 
 This project includes Sentry for error monitoring. To enable it in your environment:
 
 1. Create a Sentry account and a new project at [sentry.io](https://sentry.io/).
-2. In the Sentry project settings, find your **DSN**.
+2. In the Sentry project settings, find your **DSN**, **Organization Slug**, and **Project Slug**. You will also need an **Auth Token** with permissions suitable for source maps/releases (for example, project:releases and org:read).
 3. Add the following environment variables to your `.env.local`:
 
    ```bash
-   # Sentry connection string
+   # Sentry connection string (required)
    SENTRY_DSN=<your-sentry-dsn>
 
+   # Sentry organization and project used by the Vite/Sentry integration (required)
+   VITE_SENTRY_ORG=<your-sentry-org-slug>
+   VITE_SENTRY_PROJECT=<your-sentry-project-slug>
+
+   # Auth token used for Sentry CLI / build-time operations (required)
+   SENTRY_AUTH_TOKEN=<your-sentry-auth-token>
    # Optional: environment name used to tag events (e.g. development, staging, production)
    SENTRY_ENVIRONMENT=development
    ```
