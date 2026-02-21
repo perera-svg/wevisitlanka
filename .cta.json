@@ -11,8 +11,11 @@
   "envVarValues": {},
   "routerOnly": false,
   "version": 1,
+  "addOns": true,
   "framework": "react-cra",
   "chosenAddOns": [
-    "cloudflare"
+    "cloudflare",
+    "sentry",
+    "workos"
   ]
 }
