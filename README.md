@@ -84,7 +84,7 @@ This project includes Sentry for error monitoring. To enable it in your environm
    # Auth token used for Sentry CLI / build-time operations (required)
    SENTRY_AUTH_TOKEN=<your-sentry-auth-token>
    # Optional: environment name used to tag events (e.g. development, staging, production)
-   SENTRY_ENVIRONMENT=development
+   VITE_ENVIRONMENT=development
    ```
 
 Once these variables are set, Sentry will start capturing errors and performance data according to the project’s Sentry configuration.
