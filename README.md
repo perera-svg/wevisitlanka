@@ -42,13 +42,13 @@ If you prefer not to use Tailwind CSS:
 
 This project uses [Biome](https://biomejs.dev/) for linting and formatting. The following scripts are available:
 
-
 ```bash
 bun --bun run lint
 bun --bun run format
 bun --bun run check
 ```
 
+> **Note:** Every pull request and push to `main` must pass the Biome lint stage in CI. Run `bun --bun run check` locally before opening a PR to catch any issues early.
 ## Git Workflow: Pre-commit Biome Check
 
 This project runs `biome check` on staged files during `git commit` using Husky + lint-staged.
