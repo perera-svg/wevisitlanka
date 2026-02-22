@@ -66,5 +66,5 @@ Pre-commit hook runs `biome check` on staged files via Husky + lint-staged. If a
 
 ## Environment Variables
 
-Required in `.env.local`: `VITE_SENTRY_DSN`, `VITE_SENTRY_ORG`, `VITE_SENTRY_PROJECT`, `SENTRY_AUTH_TOKEN`, `VITE_WORKOS_CLIENT_ID`, `VITE_WORKOS_API_HOSTNAME`. Optional: `VITE_ENVIRONMENT`.
+Required in `.env.local`: `VITE_SENTRY_ORG`, `VITE_SENTRY_PROJECT`, `SENTRY_AUTH_TOKEN`, `VITE_WORKOS_CLIENT_ID`, `VITE_WORKOS_API_HOSTNAME`. Optional (required to enable Sentry): `VITE_SENTRY_DSN`. Optional: `VITE_ENVIRONMENT`.
 `VITE_ENVIRONMENT` defaults to `"development"`. Set to `"production"` to reduce Sentry server-side sample rate.
