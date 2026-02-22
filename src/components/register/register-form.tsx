@@ -1,5 +1,6 @@
 import { useForm } from "@tanstack/react-form";
 import { useNavigate } from "@tanstack/react-router";
+import { useAuth } from "@workos-inc/authkit-react";
 import { Mail } from "lucide-react";
 import { useState } from "react";
 import { z } from "zod";
@@ -11,7 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { getOAuthUrl, registerUser } from "@/routes/register";
+import { registerUser } from "@/routes/register";
 
 const fullNameSchema = z.string().min(1, "Full name is required");
 const emailSchema = z.string().email("Please enter a valid email address");
@@ -21,6 +22,7 @@ const passwordSchema = z
 
 export function RegisterForm() {
 	const navigate = useNavigate();
+	const { getSignInUrl } = useAuth();
 	const [serverError, setServerError] = useState<string | null>(null);
 
 	const form = useForm({
@@ -70,8 +72,10 @@ export function RegisterForm() {
 
 	async function handleSocialLogin(provider: Provider) {
 		try {
-			const result = await getOAuthUrl({ data: { provider } });
-			window.location.href = result.url;
+			const signInUrl = await getSignInUrl();
+			const url = new URL(signInUrl);
+			url.searchParams.set("provider", provider);
+			window.location.href = url.toString();
 		} catch (error) {
 			if (error instanceof Error) {
 				setServerError(error.message);

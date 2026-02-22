@@ -50,27 +50,6 @@ const registerUser = createServerFn({ method: "POST" })
 		);
 	});
 
-const getOAuthUrl = createServerFn({ method: "GET" })
-	.inputValidator(
-		(data: { provider: "GoogleOAuth" | "GitHubOAuth" | "AppleOAuth" }) => data,
-	)
-	.handler(async ({ data }) => {
-		const { WorkOS } = await import("@workos-inc/node");
-		const { env } = await import("@/env");
-
-		const workos = new WorkOS(env.WORKOS_API_KEY, {
-			clientId: env.VITE_WORKOS_CLIENT_ID,
-		});
-
-		const url = workos.userManagement.getAuthorizationUrl({
-			provider: data.provider,
-			redirectUri: `${env.SERVER_URL ?? "http://localhost:3000"}/callback`,
-			clientId: env.VITE_WORKOS_CLIENT_ID,
-		});
-
-		return { url };
-	});
-
 export const Route = createFileRoute("/register")({
 	ssr: false,
 	component: RegisterPage,
@@ -107,4 +86,4 @@ function RegisterPage() {
 	);
 }
 
-export { registerUser, getOAuthUrl };
+export { registerUser };

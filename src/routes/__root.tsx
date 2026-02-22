@@ -1,6 +1,6 @@
-import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
-import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
+import { createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
+import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 
 import Header from "../components/Header";
 
@@ -23,6 +23,16 @@ export const Route = createRootRoute({
 			},
 		],
 		links: [
+			{ rel: "preconnect", href: "https://fonts.googleapis.com" },
+			{
+				rel: "preconnect",
+				href: "https://fonts.gstatic.com",
+				crossOrigin: "anonymous",
+			},
+			{
+				rel: "stylesheet",
+				href: "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap",
+			},
 			{
 				rel: "stylesheet",
 				href: appCss,
