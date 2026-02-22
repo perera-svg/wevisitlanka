@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.npmjs.com)",
+      "Read(//c/Users/chama/.claude/plugins/cache/claude-plugins-official/superpowers/4.3.1/skills/subagent-driven-development/**)",
+      "Bash(bun add:*)",
+      "Bash(bun install:*)",
+      "Bash(git branch:*)",
+      "Bash(bunx biome check:*)",
+      "Bash(grep:*)",
+      "Bash(bunx @tanstack/router-cli generate:*)",
+      "Bash(node -e:*)",
+      "Bash(npx biome check:*)",
+      "Bash(npx tsc:*)",
+      "Bash(bunx tsc:*)",
+      "Bash(curl:*)",
+      "mcp__chrome-devtools__take_screenshot"
+    ]
+  }
+}
