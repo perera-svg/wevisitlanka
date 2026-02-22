@@ -15,12 +15,13 @@ jobs:
       contents: read
     env:
       CI: true
-      VITE_SENTRY_PROJECT: ${{ secrets.VITE_SENTRY_PROJECT }}
+      VITE_SENTRY_DSN: ${{ secrets.VITE_SENTRY_DSN }}
       VITE_SENTRY_ORG: ${{ secrets.VITE_SENTRY_ORG }}
+      VITE_SENTRY_PROJECT: ${{ secrets.VITE_SENTRY_PROJECT }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
       VITE_WORKOS_CLIENT_ID: ${{ secrets.VITE_WORKOS_CLIENT_ID }}
       VITE_WORKOS_API_HOSTNAME: ${{ secrets.VITE_WORKOS_API_HOSTNAME }}
-      VITE_SENTRY_DSN: ${{ secrets.VITE_SENTRY_DSN }}
+      WORKOS_API_KEY: ${{ secrets.WORKOS_API_KEY }}
 
     steps:
       - name: Checkout code
