@@ -7,6 +7,7 @@
       "dependencies": {
         "@cloudflare/vite-plugin": "^1.13.8",
         "@sentry/tanstackstart-react": "^10.34.0",
+        "@t3-oss/env-core": "^0.13.8",
         "@tailwindcss/vite": "^4.1.18",
         "@tanstack/react-devtools": "^0.7.0",
         "@tanstack/react-router": "^1.132.0",
@@ -14,13 +15,13 @@
         "@tanstack/react-router-ssr-query": "^1.131.7",
         "@tanstack/react-start": "^1.132.0",
         "@tanstack/router-plugin": "^1.132.0",
-        "@workos-inc/authkit-react": "^0.16.0",
+        "@workos-inc/authkit-react": "^0.13.0",
         "dotenv-cli": "^11.0.0",
         "lucide-react": "^0.545.0",
         "react": "^19.2.0",
         "react-dom": "^19.2.0",
         "tailwindcss": "^4.1.18",
-        "zod": "^4.3.6",
+        "zod": "^4.1.11",
       },
       "devDependencies": {
         "@biomejs/biome": "2.2.4",
@@ -464,6 +465,8 @@
 
     "@speed-highlight/core": ["@speed-highlight/core@1.2.14", "", {}, "sha512-G4ewlBNhUtlLvrJTb88d2mdy2KRijzs4UhnlrOSRT4bmjh/IqNElZa3zkrZ+TC47TwtlDWzVLFADljF1Ijp5hA=="],
 
+    "@t3-oss/env-core": ["@t3-oss/env-core@0.13.10", "", { "peerDependencies": { "arktype": "^2.1.0", "typescript": ">=5.0.0", "valibot": "^1.0.0-beta.7 || ^1.0.0", "zod": "^3.24.0 || ^4.0.0" }, "optionalPeers": ["arktype", "typescript", "valibot", "zod"] }, "sha512-NNFfdlJ+HmPHkLi2HKy7nwuat9SIYOxei9K10lO2YlcSObDILY7mHZNSHsieIM3A0/5OOzw/P/b+yLvPdaG52g=="],
+
     "@tailwindcss/node": ["@tailwindcss/node@4.2.0", "", { "dependencies": { "@jridgewell/remapping": "^2.3.5", "enhanced-resolve": "^5.19.0", "jiti": "^2.6.1", "lightningcss": "1.31.1", "magic-string": "^0.30.21", "source-map-js": "^1.2.1", "tailwindcss": "4.2.0" } }, "sha512-Yv+fn/o2OmL5fh/Ir62VXItdShnUxfpkMA4Y7jdeC8O81WPB8Kf6TT6GSHvnqgSwDzlB5iT7kDpeXxLsUS0T6Q=="],
 
     "@tailwindcss/oxide": ["@tailwindcss/oxide@4.2.0", "", { "optionalDependencies": { "@tailwindcss/oxide-android-arm64": "4.2.0", "@tailwindcss/oxide-darwin-arm64": "4.2.0", "@tailwindcss/oxide-darwin-x64": "4.2.0", "@tailwindcss/oxide-freebsd-x64": "4.2.0", "@tailwindcss/oxide-linux-arm-gnueabihf": "4.2.0", "@tailwindcss/oxide-linux-arm64-gnu": "4.2.0", "@tailwindcss/oxide-linux-arm64-musl": "4.2.0", "@tailwindcss/oxide-linux-x64-gnu": "4.2.0", "@tailwindcss/oxide-linux-x64-musl": "4.2.0", "@tailwindcss/oxide-wasm32-wasi": "4.2.0", "@tailwindcss/oxide-win32-arm64-msvc": "4.2.0", "@tailwindcss/oxide-win32-x64-msvc": "4.2.0" } }, "sha512-AZqQzADaj742oqn2xjl5JbIOzZB/DGCYF/7bpvhA8KvjUj9HJkag6bBuwZvH1ps6dfgxNHyuJVlzSr2VpMgdTQ=="],
@@ -606,9 +609,9 @@
 
     "@vitest/utils": ["@vitest/utils@3.2.4", "", { "dependencies": { "@vitest/pretty-format": "3.2.4", "loupe": "^3.1.4", "tinyrainbow": "^2.0.0" } }, "sha512-fB2V0JFrQSMsCo9HiSq3Ezpdv4iYaXRG1Sx8edX3MwxfyNn83mKiGzOcH+Fkxt4MHxr3y42fQi1oeAInqgX2QA=="],
 
-    "@workos-inc/authkit-js": ["@workos-inc/authkit-js@0.19.0", "", {}, "sha512-/nyj2PrsV/dYJgtN+EBfKH8LUGeAXouH8nOOX/ybWe4i6yYacW3Txafbh35Ik7ze6rWbo7+ilVIURd14Ne/kCA=="],
+    "@workos-inc/authkit-js": ["@workos-inc/authkit-js@0.14.0", "", {}, "sha512-Wt6rKoZdZnuAgiEBlvMDKhleU9DAwpyyy1SibacrnOWQgF4rcNlC+NTnHiiXu6OiOjQo6pPxhW42kCL+Gi+fjw=="],
 
-    "@workos-inc/authkit-react": ["@workos-inc/authkit-react@0.16.0", "", { "dependencies": { "@workos-inc/authkit-js": "0.19.0" }, "peerDependencies": { "react": ">=17" } }, "sha512-627CH9a8hqm1eHP0/8BOqUyTTqy3oPgB8+9dsU/SIRjfxQyCQAGjDmOiET/svBJgrkGW8cRfn8KECLV6b20Pqg=="],
+    "@workos-inc/authkit-react": ["@workos-inc/authkit-react@0.13.0", "", { "dependencies": { "@workos-inc/authkit-js": "0.14.0" }, "peerDependencies": { "react": ">=17" } }, "sha512-JhcPI9+I0MGOu7B33Gych76Xi7jKfKKfoZ4Mb6JPY9raeEqJQcnN4jMite2ynmMdmiZljIq7wkyf2WAsEU3SzQ=="],
 
     "acorn": ["acorn@8.16.0", "", { "bin": { "acorn": "bin/acorn" } }, "sha512-UVJyE9MttOsBQIDKw1skb9nAwQuR5wuGD3+82K6JgJlm/Y+KI92oNsMNGZCYdDsVtRHSak0pcV5Dno5+4jh9sw=="],
 

@@ -1,13 +1,10 @@
 import { createRouter as createTanStackRouter } from "@tanstack/react-router";
 import { createClientOnlyFn } from "@tanstack/react-start";
+import { env } from "@/env";
 import { routeTree } from "./routeTree.gen";
 
-const sentryDsn =
-	import.meta.env?.VITE_SENTRY_DSN ?? process.env.VITE_SENTRY_DSN;
-const sentryEnvironment =
-	import.meta.env?.VITE_ENVIRONMENT ??
-	process.env.VITE_ENVIRONMENT ??
-	"development";
+const sentryDsn = env.VITE_SENTRY_DSN;
+const sentryEnvironment = env.VITE_ENVIRONMENT ?? "development";
 
 const initSentryClient = createClientOnlyFn(async () => {
 	if (!sentryDsn) {
