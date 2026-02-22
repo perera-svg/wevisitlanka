@@ -22,6 +22,12 @@ const registerUser = createServerFn({ method: "POST" })
 		const { WorkOS } = await import("@workos-inc/node");
 		const { env } = await import("@/env");
 
+		if (!env.WORKOS_API_KEY) {
+			throw new Error(
+				"Registration is not configured. Missing WORKOS_API_KEY.",
+			);
+		}
+
 		const workos = new WorkOS(env.WORKOS_API_KEY, {
 			clientId: env.VITE_WORKOS_CLIENT_ID,
 		});
