@@ -108,16 +108,14 @@ export function RegisterForm() {
 					SL
 				</div>
 				<div>
-					<p className="text-sm font-semibold text-gray-900">
-						Sri Lanka Tourism
-					</p>
-					<p className="text-xs text-gray-500">Business Portal</p>
+					<p className="text-lg font-bold text-gray-900">Sri Lanka Tourism</p>
+					<p className="text-[13px] text-gray-500">Business Portal</p>
 				</div>
 			</div>
 
 			{/* Header */}
 			<div className="flex flex-col gap-2">
-				<h1 className="text-2xl font-bold text-gray-900">
+				<h1 className="text-[28px] font-bold text-gray-900">
 					Create your account
 				</h1>
 				<p className="text-sm text-gray-500">
@@ -302,7 +300,7 @@ export function RegisterForm() {
 							/>
 							<label
 								htmlFor={field.name}
-								className="text-xs leading-relaxed text-gray-600"
+								className="text-[13px] leading-relaxed text-gray-600"
 							>
 								I agree to the{" "}
 								<a

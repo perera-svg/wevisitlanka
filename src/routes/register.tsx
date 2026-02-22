@@ -76,7 +76,7 @@ function RegisterPage() {
 	return (
 		<div className="fixed inset-0 z-50 flex h-screen bg-white">
 			{/* Left Panel - Form */}
-			<div className="flex flex-1 items-center justify-center overflow-y-auto px-8 py-12 lg:px-16">
+			<div className="scrollbar-thin-hover flex flex-1 items-center justify-center overflow-y-auto px-8 py-12 lg:px-16">
 				<RegisterForm />
 			</div>
 

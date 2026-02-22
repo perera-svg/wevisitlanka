@@ -127,3 +127,31 @@
     @apply font-sans;
     }
 }
+
+/* Hover-reveal scrollbar: hidden until hovered, thin and subtle */
+.scrollbar-thin-hover {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  transition: scrollbar-color 0.2s;
+}
+.scrollbar-thin-hover:hover {
+  scrollbar-color: oklch(0.8 0 0) transparent;
+}
+/* WebKit (Chrome, Safari, Edge) */
+.scrollbar-thin-hover::-webkit-scrollbar {
+  width: 6px;
+}
+.scrollbar-thin-hover::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar-thin-hover::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 3px;
+  transition: background 0.2s;
+}
+.scrollbar-thin-hover:hover::-webkit-scrollbar-thumb {
+  background: oklch(0.8 0 0);
+}
+.scrollbar-thin-hover:hover::-webkit-scrollbar-thumb:hover {
+  background: oklch(0.7 0 0);
+}
