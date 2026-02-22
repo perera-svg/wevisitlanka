@@ -1,6 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
-import { handleOAuthCallback } from "../../integrations/workos/auth.server";
+import { useEffect, useRef, useState } from "react";
+import { handleOAuthCallback } from "../../integrations/workos/auth-api";
+import { useAuth } from "../../integrations/workos/auth-context";
 
 export const Route = createFileRoute("/auth/callback")({
 	component: OAuthCallbackPage,
@@ -9,9 +10,14 @@ export const Route = createFileRoute("/auth/callback")({
 
 function OAuthCallbackPage() {
 	const navigate = useNavigate();
+	const { refreshSession } = useAuth();
 	const [error, setError] = useState<string | null>(null);
+	const calledRef = useRef(false);
 
 	useEffect(() => {
+		if (calledRef.current) return;
+		calledRef.current = true;
+
 		const params = new URLSearchParams(window.location.search);
 		const code = params.get("code");
 
@@ -21,17 +27,20 @@ function OAuthCallbackPage() {
 		}
 
 		handleOAuthCallback({ data: { code } })
-			.then((result) => {
+			.then(async (result) => {
 				if (result.success) {
+					await refreshSession();
 					navigate({ to: "/" });
 				} else {
-					setError("Authentication failed");
+					setError(result.error ?? "Authentication failed");
 				}
 			})
-			.catch(() => {
-				setError("Something went wrong during authentication");
+			.catch((err: unknown) => {
+				const message =
+					err instanceof Error ? err.message : "Something went wrong";
+				setError(message);
 			});
-	}, [navigate]);
+	}, [navigate, refreshSession]);
 
 	if (error) {
 		return (

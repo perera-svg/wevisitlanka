@@ -3,7 +3,7 @@ import { Mail } from "lucide-react";
 import { useId, useState } from "react";
 import AuthLayout from "../components/auth/AuthLayout.tsx";
 import SocialLoginButtons from "../components/auth/SocialLoginButtons.tsx";
-import { getOAuthUrl, loginUser } from "../integrations/workos/auth.server";
+import { getOAuthUrl, loginUser } from "../integrations/workos/auth-api";
 
 export const Route = createFileRoute("/login")({
 	component: LoginPage,

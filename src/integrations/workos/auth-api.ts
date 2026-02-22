@@ -1,33 +1,40 @@
 import { createServerFn } from "@tanstack/react-start";
 import {
-	getRequestHeader,
-	setResponseHeaders,
+	deleteCookie,
+	getCookie,
+	setCookie,
 } from "@tanstack/react-start/server";
 import { WorkOS } from "@workos-inc/node";
 import { z } from "zod";
 import type { SessionUser } from "./session";
-import {
-	buildClearSessionCookie,
-	buildSessionCookie,
-	createSessionToken,
-	parseSessionCookie,
-	verifySessionToken,
-} from "./session";
+import { createSessionToken, verifySessionToken } from "./session";
 
-const WORKOS_API_KEY = process.env.WORKOS_API_KEY;
-if (!WORKOS_API_KEY) {
-	throw new Error("WORKOS_API_KEY is not set in environment variables");
+let _workos: WorkOS | null = null;
+
+function getWorkOS(): WorkOS {
+	if (!_workos) {
+		const apiKey = process.env.WORKOS_API_KEY;
+		if (!apiKey) {
+			throw new Error("WORKOS_API_KEY is not set in environment variables");
+		}
+		_workos = new WorkOS(apiKey);
+	}
+	return _workos;
 }
 
-const WORKOS_CLIENT_ID = process.env.WORKOS_CLIENT_ID;
-if (!WORKOS_CLIENT_ID) {
-	throw new Error("WORKOS_CLIENT_ID is not set in environment variables");
+function getClientId(): string {
+	const clientId = process.env.WORKOS_CLIENT_ID;
+	if (!clientId) {
+		throw new Error("WORKOS_CLIENT_ID is not set in environment variables");
+	}
+	return clientId;
 }
 
-const WORKOS_REDIRECT_URI =
-	process.env.WORKOS_REDIRECT_URI || "http://localhost:3000/auth/callback";
-
-const workos = new WorkOS(WORKOS_API_KEY);
+function getRedirectUri(): string {
+	return (
+		process.env.WORKOS_REDIRECT_URI || "http://localhost:3000/auth/callback"
+	);
+}
 
 function toSessionUser(user: {
 	id: string;
@@ -47,19 +54,19 @@ function toSessionUser(user: {
 
 async function setSessionCookie(user: SessionUser) {
 	const token = await createSessionToken(user);
-	setResponseHeaders(
-		new Headers({
-			"Set-Cookie": buildSessionCookie(token),
-		}),
-	);
+	setCookie("session", token, {
+		path: "/",
+		httpOnly: true,
+		sameSite: "lax",
+		maxAge: 60 * 60 * 24 * 7,
+	});
 }
 
 // --- Get current session ---
 
 export const getSession = createServerFn({ method: "GET" }).handler(
 	async () => {
-		const cookieHeader = getRequestHeader("cookie") ?? "";
-		const token = parseSessionCookie(cookieHeader);
+		const token = getCookie("session");
 
 		if (!token) return { user: null };
 
@@ -77,26 +84,25 @@ const registerSchema = z.object({
 });
 
 export const registerUser = createServerFn({ method: "POST" })
-	.validator((data: z.infer<typeof registerSchema>) =>
-		registerSchema.parse(data),
-	)
+	.inputValidator(registerSchema)
 	.handler(async ({ data }) => {
 		const [firstName, ...rest] = data.name.trim().split(" ");
 		const lastName = rest.join(" ") || null;
 
 		try {
-			const user = await workos.userManagement.createUser({
+			const user = await getWorkOS().userManagement.createUser({
 				email: data.email,
 				password: data.password,
-				firstName: firstName || null,
-				lastName,
+				firstName: firstName || undefined,
+				lastName: lastName || undefined,
 			});
 
-			const authResult = await workos.userManagement.authenticateWithPassword({
-				clientId: WORKOS_CLIENT_ID,
-				email: data.email,
-				password: data.password,
-			});
+			const authResult =
+				await getWorkOS().userManagement.authenticateWithPassword({
+					clientId: getClientId(),
+					email: data.email,
+					password: data.password,
+				});
 
 			const sessionUser = toSessionUser(authResult.user ?? user);
 			await setSessionCookie(sessionUser);
@@ -117,14 +123,15 @@ const loginSchema = z.object({
 });
 
 export const loginUser = createServerFn({ method: "POST" })
-	.validator((data: z.infer<typeof loginSchema>) => loginSchema.parse(data))
+	.inputValidator(loginSchema)
 	.handler(async ({ data }) => {
 		try {
-			const authResult = await workos.userManagement.authenticateWithPassword({
-				clientId: WORKOS_CLIENT_ID,
-				email: data.email,
-				password: data.password,
-			});
+			const authResult =
+				await getWorkOS().userManagement.authenticateWithPassword({
+					clientId: getClientId(),
+					email: data.email,
+					password: data.password,
+				});
 
 			const sessionUser = toSessionUser(authResult.user);
 			await setSessionCookie(sessionUser);
@@ -146,44 +153,44 @@ const oauthProviderSchema = z.object({
 });
 
 export const getOAuthUrl = createServerFn({ method: "GET" })
-	.validator((data: z.infer<typeof oauthProviderSchema>) =>
-		oauthProviderSchema.parse(data),
-	)
+	.inputValidator(oauthProviderSchema)
 	.handler(async ({ data }) => {
-		const url = await workos.userManagement.getAuthorizationUrl({
+		const url = getWorkOS().userManagement.getAuthorizationUrl({
 			provider: data.provider as OAuthProvider,
-			clientId: WORKOS_CLIENT_ID,
-			redirectUri: WORKOS_REDIRECT_URI,
+			clientId: getClientId(),
+			redirectUri: getRedirectUri(),
 		});
 		return { url };
 	});
 
 export const handleOAuthCallback = createServerFn({ method: "GET" })
-	.validator((data: { code: string }) => {
+	.inputValidator((data: { code: string }) => {
 		if (!data.code) throw new Error("Authorization code is required");
 		return data;
 	})
 	.handler(async ({ data }) => {
-		const authResult = await workos.userManagement.authenticateWithCode({
-			clientId: WORKOS_CLIENT_ID,
-			code: data.code,
-		});
+		try {
+			const authResult = await getWorkOS().userManagement.authenticateWithCode({
+				clientId: getClientId(),
+				code: data.code,
+			});
 
-		const sessionUser = toSessionUser(authResult.user);
-		await setSessionCookie(sessionUser);
+			const sessionUser = toSessionUser(authResult.user);
+			await setSessionCookie(sessionUser);
 
-		return { success: true, user: sessionUser };
+			return { success: true, user: sessionUser };
+		} catch (error: unknown) {
+			const message =
+				error instanceof Error ? error.message : "OAuth authentication failed";
+			return { success: false, error: message };
+		}
 	});
 
 // --- Sign out ---
 
 export const signOutUser = createServerFn({ method: "POST" }).handler(
 	async () => {
-		setResponseHeaders(
-			new Headers({
-				"Set-Cookie": buildClearSessionCookie(),
-			}),
-		);
+		deleteCookie("session", { path: "/" });
 		return { success: true };
 	},
 );

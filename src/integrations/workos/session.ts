@@ -35,16 +35,3 @@ export async function verifySessionToken(
 		return null;
 	}
 }
-
-export function buildSessionCookie(token: string): string {
-	return `session=${token}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${60 * 60 * 24 * 7}`;
-}
-
-export function buildClearSessionCookie(): string {
-	return "session=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0";
-}
-
-export function parseSessionCookie(cookieHeader: string): string | null {
-	const match = cookieHeader.match(/(?:^|;\s*)session=([^;]*)/);
-	return match?.[1] || null;
-}

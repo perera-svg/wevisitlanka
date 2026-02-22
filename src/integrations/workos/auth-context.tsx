@@ -6,7 +6,7 @@ import {
 	useEffect,
 	useState,
 } from "react";
-import { getSession, signOutUser } from "./auth.server";
+import { getSession, signOutUser } from "./auth-api";
 import type { SessionUser } from "./session";
 
 interface AuthContextValue {

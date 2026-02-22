@@ -7,10 +7,10 @@
  */
 
 import * as fs from "node:fs/promises";
+import * as SentryServer from "@sentry/node";
 import { createFileRoute } from "@tanstack/react-router";
 import { createClientOnlyFn, createServerFn } from "@tanstack/react-start";
-import * as SentryServer from "@sentry/node";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const loadClientSentry = createClientOnlyFn(
 	() => import("@sentry/tanstackstart-react"),
@@ -42,6 +42,8 @@ export const Route = createFileRoute("/demo/sentry/testing")({
 function SentryLogo({ size = 48 }: { size?: number }) {
 	return (
 		<svg
+			role="img"
+			aria-label="Sentry logo"
 			height={size}
 			width={size}
 			fill="none"
@@ -127,6 +129,8 @@ function SentryButton({
 			>
 				{loading && (
 					<svg
+						role="img"
+						aria-label="Loading"
 						className="animate-spin h-5 w-5"
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
@@ -484,7 +488,13 @@ function RouteComponent() {
 				<div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-12">
 					<FeatureCard
 						icon={
-							<svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+							<svg
+								role="img"
+								aria-label="Error Monitoring"
+								className="w-6 h-6"
+								fill="currentColor"
+								viewBox="0 0 24 24"
+							>
 								<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
 							</svg>
 						}
@@ -493,7 +503,13 @@ function RouteComponent() {
 					/>
 					<FeatureCard
 						icon={
-							<svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+							<svg
+								role="img"
+								aria-label="Performance"
+								className="w-6 h-6"
+								fill="currentColor"
+								viewBox="0 0 24 24"
+							>
 								<path d="M13 3v18h-2V3h2zm6 6v12h-2V9h2zM7 14v7H5v-7h2z" />
 							</svg>
 						}
@@ -502,7 +518,13 @@ function RouteComponent() {
 					/>
 					<FeatureCard
 						icon={
-							<svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+							<svg
+								role="img"
+								aria-label="Session Replay"
+								className="w-6 h-6"
+								fill="currentColor"
+								viewBox="0 0 24 24"
+							>
 								<path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z" />
 							</svg>
 						}
@@ -511,7 +533,13 @@ function RouteComponent() {
 					/>
 					<FeatureCard
 						icon={
-							<svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+							<svg
+								role="img"
+								aria-label="Real-time Alerts"
+								className="w-6 h-6"
+								fill="currentColor"
+								viewBox="0 0 24 24"
+							>
 								<path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z" />
 							</svg>
 						}

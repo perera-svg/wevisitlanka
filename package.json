@@ -6,8 +6,8 @@
     "#/*": "./src/*"
   },
   "scripts": {
-    "dev": "dotenv -e .env.local -- sh -c \"NODE_OPTIONS='--import ./instrument.server.mjs' vite dev --port 3000\"",
-    "dev:ci": "sh -c \"NODE_OPTIONS='--import ./instrument.server.mjs' vite dev --host 127.0.0.1 --port 3000 --strictPort\"",
+    "dev": "dotenv -e .env.local -- cross-env NODE_OPTIONS=--import=./instrument.server.mjs vite dev --port 3000",
+    "dev:ci": "cross-env NODE_OPTIONS=--import=./instrument.server.mjs vite dev --host 127.0.0.1 --port 3000 --strictPort",
     "build": "vite build && cp instrument.server.mjs dist/server",
     "preview": "vite preview",
     "test": "vitest run",
@@ -19,6 +19,7 @@
     "format": "biome format",
     "lint": "biome lint",
     "check": "biome check",
+    "fix": "biome check --write",
     "prepare": "husky",
     "start": "node --import ./dist/server/instrument.server.mjs dist/server/index.mjs"
   },
@@ -46,6 +47,7 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.2.4",
     "@playwright/test": "^1.56.1",
     "@tanstack/devtools-vite": "^0.3.11",
     "@testing-library/dom": "^10.4.0",
@@ -54,6 +56,7 @@
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
     "@vitejs/plugin-react": "^5.0.4",
+    "cross-env": "^10.1.0",
     "husky": "^9.1.7",
     "jsdom": "^27.0.0",
     "lint-staged": "^16.1.6",
@@ -61,7 +64,6 @@
     "vite": "^7.1.7",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.0.5",
-    "wrangler": "^4.40.3",
-    "@biomejs/biome": "2.2.4"
+    "wrangler": "^4.40.3"
   }
 }

@@ -4,7 +4,7 @@ import { useId, useState } from "react";
 import AuthLayout from "../components/auth/AuthLayout.tsx";
 import PasswordStrength from "../components/auth/PasswordStrength.tsx";
 import SocialLoginButtons from "../components/auth/SocialLoginButtons.tsx";
-import { getOAuthUrl, registerUser } from "../integrations/workos/auth.server";
+import { getOAuthUrl, registerUser } from "../integrations/workos/auth-api";
 
 export const Route = createFileRoute("/register")({
 	component: RegisterPage,
