@@ -14,6 +14,18 @@ import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { registerUser } from "@/routes/register";
 
+function getFieldErrors(errors: unknown[]): string {
+	return errors
+		.map((e) =>
+			typeof e === "string"
+				? e
+				: e != null && typeof e === "object" && "message" in e
+					? (e as { message: string }).message
+					: String(e),
+		)
+		.join(", ");
+}
+
 const fullNameSchema = z.string().min(1, "Full name is required");
 const emailSchema = z.string().email("Please enter a valid email address");
 const passwordSchema = z
@@ -157,7 +169,9 @@ export function RegisterForm() {
 								aria-invalid={field.state.meta.errors.length > 0}
 							/>
 							{field.state.meta.errors.length > 0 && (
-								<FieldError>{field.state.meta.errors.join(", ")}</FieldError>
+								<FieldError>
+									{getFieldErrors(field.state.meta.errors)}
+								</FieldError>
 							)}
 						</Field>
 					)}
@@ -192,7 +206,9 @@ export function RegisterForm() {
 								/>
 							</div>
 							{field.state.meta.errors.length > 0 && (
-								<FieldError>{field.state.meta.errors.join(", ")}</FieldError>
+								<FieldError>
+									{getFieldErrors(field.state.meta.errors)}
+								</FieldError>
 							)}
 						</Field>
 					)}
@@ -224,7 +240,9 @@ export function RegisterForm() {
 							/>
 							<PasswordStrengthBar password={field.state.value} />
 							{field.state.meta.errors.length > 0 && (
-								<FieldError>{field.state.meta.errors.join(", ")}</FieldError>
+								<FieldError>
+									{getFieldErrors(field.state.meta.errors)}
+								</FieldError>
 							)}
 						</Field>
 					)}
@@ -261,7 +279,9 @@ export function RegisterForm() {
 								aria-invalid={field.state.meta.errors.length > 0}
 							/>
 							{field.state.meta.errors.length > 0 && (
-								<FieldError>{field.state.meta.errors.join(", ")}</FieldError>
+								<FieldError>
+									{getFieldErrors(field.state.meta.errors)}
+								</FieldError>
 							)}
 						</Field>
 					)}
