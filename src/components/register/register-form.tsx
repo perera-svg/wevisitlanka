@@ -75,6 +75,9 @@ export function RegisterForm() {
 			const signInUrl = await getSignInUrl();
 			const url = new URL(signInUrl);
 			url.searchParams.set("provider", provider);
+			if (import.meta.env.DEV) {
+				console.debug("[OAuth] Redirecting to:", url.toString());
+			}
 			window.location.href = url.toString();
 		} catch (error) {
 			if (error instanceof Error) {

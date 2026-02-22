@@ -9,6 +9,12 @@ const redirectUri =
 		? `${window.location.origin}/callback`
 		: undefined;
 
+if (import.meta.env.DEV && typeof window !== "undefined") {
+	console.debug("[WorkOS] clientId:", workosClientId);
+	console.debug("[WorkOS] apiHostname:", workosApiHostname);
+	console.debug("[WorkOS] redirectUri:", redirectUri);
+}
+
 export default function AppWorkOSProvider({
 	children,
 }: {
