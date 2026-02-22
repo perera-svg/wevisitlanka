@@ -1,5 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useAuth } from "@workos-inc/authkit-react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useAuth } from "../../integrations/workos/auth-context";
 
 export const Route = createFileRoute("/demo/workos")({
 	ssr: false,
@@ -7,7 +7,7 @@ export const Route = createFileRoute("/demo/workos")({
 });
 
 function App() {
-	const { user, isLoading, signIn, signOut } = useAuth();
+	const { user, isLoading, signOut } = useAuth();
 
 	if (isLoading) {
 		return (
@@ -28,7 +28,6 @@ function App() {
 					</h1>
 
 					<div className="space-y-6">
-						{/* Profile Picture */}
 						{user.profilePictureUrl && (
 							<div className="flex justify-center">
 								<img
@@ -39,43 +38,42 @@ function App() {
 							</div>
 						)}
 
-						{/* User Information */}
 						<div className="space-y-4">
 							<div className="bg-gray-700/30 rounded-lg p-4 border border-gray-600/30">
-								<label className="text-gray-400 text-sm font-medium block mb-1">
+								<span className="text-gray-400 text-sm font-medium block mb-1">
 									First Name
-								</label>
+								</span>
 								<p className="text-white text-lg">{user.firstName || "N/A"}</p>
 							</div>
 
 							<div className="bg-gray-700/30 rounded-lg p-4 border border-gray-600/30">
-								<label className="text-gray-400 text-sm font-medium block mb-1">
+								<span className="text-gray-400 text-sm font-medium block mb-1">
 									Last Name
-								</label>
+								</span>
 								<p className="text-white text-lg">{user.lastName || "N/A"}</p>
 							</div>
 
 							<div className="bg-gray-700/30 rounded-lg p-4 border border-gray-600/30">
-								<label className="text-gray-400 text-sm font-medium block mb-1">
+								<span className="text-gray-400 text-sm font-medium block mb-1">
 									Email
-								</label>
+								</span>
 								<p className="text-white text-lg break-all">
 									{user.email || "N/A"}
 								</p>
 							</div>
 
 							<div className="bg-gray-700/30 rounded-lg p-4 border border-gray-600/30">
-								<label className="text-gray-400 text-sm font-medium block mb-1">
+								<span className="text-gray-400 text-sm font-medium block mb-1">
 									User ID
-								</label>
+								</span>
 								<p className="text-gray-300 text-sm font-mono break-all">
 									{user.id || "N/A"}
 								</p>
 							</div>
 						</div>
 
-						{/* Sign Out Button */}
 						<button
+							type="button"
 							onClick={() => signOut()}
 							className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition-colors shadow-lg hover:shadow-xl"
 						>
@@ -96,13 +94,12 @@ function App() {
 				<p className="text-gray-400 text-center mb-6">
 					Sign in to view your profile information
 				</p>
-				<button
-					onClick={() => signIn()}
-					disabled={isLoading}
-					className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition-colors shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+				<Link
+					to="/login"
+					className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition-colors shadow-lg hover:shadow-xl text-center"
 				>
-					Sign In with AuthKit
-				</button>
+					Sign In
+				</Link>
 			</div>
 		</div>
 	);

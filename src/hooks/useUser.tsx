@@ -1,23 +1,21 @@
+import { useLocation, useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
-import { useAuth } from "@workos-inc/authkit-react";
-import { useLocation } from "@tanstack/react-router";
+import { useAuth } from "../integrations/workos/auth-context";
+import type { SessionUser } from "../integrations/workos/session";
 
-type UserOrNull = ReturnType<typeof useAuth>["user"];
-
-// redirects to the sign-in page if the user is not signed in
-export const useUser = (): UserOrNull => {
-	const { user, isLoading, signIn } = useAuth();
+export const useUser = (): SessionUser | null => {
+	const { user, isLoading } = useAuth();
+	const navigate = useNavigate();
 	const location = useLocation();
 
 	useEffect(() => {
 		if (!isLoading && !user) {
-			signIn({
-				state: { returnTo: location.pathname },
+			navigate({
+				to: "/login",
+				search: { returnTo: location.pathname },
 			});
-		} else {
-			console.log(user);
 		}
-	}, [isLoading, user]);
+	}, [isLoading, user, navigate, location.pathname]);
 
 	return user;
 };

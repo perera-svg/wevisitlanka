@@ -1,7 +1,8 @@
-import { useAuth } from "@workos-inc/authkit-react";
+import { Link } from "@tanstack/react-router";
+import { useAuth } from "../integrations/workos/auth-context";
 
 export default function SignInButton({ large }: { large?: boolean }) {
-	const { user, isLoading, signIn, signOut } = useAuth();
+	const { user, isLoading, signOut } = useAuth();
 
 	const buttonClasses = `${
 		large ? "px-6 py-3 text-base" : "px-4 py-2 text-sm"
@@ -20,7 +21,11 @@ export default function SignInButton({ large }: { large?: boolean }) {
 					)}
 					{user.firstName} {user.lastName}
 				</div>
-				<button onClick={() => signOut()} className={buttonClasses}>
+				<button
+					type="button"
+					onClick={() => signOut()}
+					className={buttonClasses}
+				>
 					Sign Out
 				</button>
 			</div>
@@ -28,14 +33,8 @@ export default function SignInButton({ large }: { large?: boolean }) {
 	}
 
 	return (
-		<button
-			onClick={() => {
-				signIn();
-			}}
-			className={buttonClasses}
-			disabled={isLoading}
-		>
-			Sign In {large && "with AuthKit"}
-		</button>
+		<Link to="/login" className={`${buttonClasses} inline-block text-center`}>
+			{isLoading ? "Loading..." : `Sign In${large ? " to Account" : ""}`}
+		</Link>
 	);
 }
