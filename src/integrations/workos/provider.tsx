@@ -1,15 +1,9 @@
-import { AuthKitProvider } from "@workos-inc/authkit-react";
 import { useNavigate } from "@tanstack/react-router";
+import { AuthKitProvider } from "@workos-inc/authkit-react";
+import { env } from "@/env";
 
-const VITE_WORKOS_CLIENT_ID = import.meta.env.VITE_WORKOS_CLIENT_ID;
-if (!VITE_WORKOS_CLIENT_ID) {
-	throw new Error("Add your WorkOS Client ID to the .env.local file");
-}
-
-const VITE_WORKOS_API_HOSTNAME = import.meta.env.VITE_WORKOS_API_HOSTNAME;
-if (!VITE_WORKOS_API_HOSTNAME) {
-	throw new Error("Add your WorkOS API Hostname to the .env.local file");
-}
+const workosClientId = env.VITE_WORKOS_CLIENT_ID;
+const workosApiHostname = env.VITE_WORKOS_API_HOSTNAME;
 
 export default function AppWorkOSProvider({
 	children,
@@ -20,8 +14,8 @@ export default function AppWorkOSProvider({
 
 	return (
 		<AuthKitProvider
-			clientId={VITE_WORKOS_CLIENT_ID}
-			apiHostname={VITE_WORKOS_API_HOSTNAME}
+			clientId={workosClientId}
+			apiHostname={workosApiHostname}
 			onRedirectCallback={({ state }) => {
 				if (state?.returnTo) {
 					navigate(state.returnTo);

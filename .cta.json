@@ -17,6 +17,7 @@
     "cloudflare",
     "biome",
     "sentry",
-    "workos"
+    "workos",
+    "t3env"
   ]
 }
