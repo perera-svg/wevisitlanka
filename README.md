@@ -1,4 +1,6 @@
-Welcome to your new TanStack Start app! 
+# WeVisitLanka
+
+Welcome to your new TanStack Start app!
 
 # Getting Started
 
@@ -66,6 +68,7 @@ bun --bun run check
 ```
 
 > **Note:** Every pull request and push to `main` must pass the Biome lint stage in CI. Run `bun --bun run check` locally before opening a PR to catch any issues early.
+
 ## Git Workflow: Pre-commit Biome Check
 
 This project runs `biome check` on staged files during `git commit` using Husky + lint-staged.
@@ -136,6 +139,7 @@ This project includes Sentry for error monitoring. To enable it in your environm
    ```
 
 Once these variables are set, Sentry will start capturing errors and performance data according to the project’s Sentry configuration.
+
 ## Routing
 
 This project uses [TanStack Router](https://tanstack.com/router) with file-based routing. Routes are managed as files in `src/routes`.
@@ -287,3 +291,18 @@ Files prefixed with `demo` can be safely deleted. They are there to provide a st
 You can learn more about all of the offerings from TanStack in the [TanStack documentation](https://tanstack.com).
 
 For TanStack Start specific documentation, visit [TanStack Start](https://tanstack.com/start).
+
+
+## T3Env
+
+- You can use T3Env to add type safety to your environment variables.
+- Add environment variables to `src/env.ts`.
+- Use the environment variables in your code.
+
+### Usage
+
+```ts
+import { env } from "@/env";
+
+console.log(env.VITE_APP_TITLE);
+```

@@ -1,25 +1,14 @@
 import { createRouter as createTanStackRouter } from "@tanstack/react-router";
 import { createClientOnlyFn } from "@tanstack/react-start";
+import { env } from "@/env";
 import { routeTree } from "./routeTree.gen";
 
-const sentryDsn =
-	import.meta.env?.VITE_SENTRY_DSN ?? process.env.VITE_SENTRY_DSN;
-const sentryEnvironment =
-	import.meta.env?.VITE_ENVIRONMENT ??
-	process.env.VITE_ENVIRONMENT ??
-	"development";
+const sentryEnvironment = env.VITE_ENVIRONMENT ?? "development";
 
 const initSentryClient = createClientOnlyFn(async () => {
-	if (!sentryDsn) {
-		console.warn(
-			"VITE_SENTRY_DSN is not defined. Sentry is not running on client.",
-		);
-		return;
-	}
-
 	const Sentry = await import("@sentry/tanstackstart-react");
 	Sentry.init({
-		dsn: sentryDsn,
+		dsn: env.VITE_SENTRY_DSN,
 		// Adds request headers and IP for users, for more info visit:
 		// https://docs.sentry.io/platforms/javascript/guides/tanstackstart-react/configuration/options/#sendDefaultPii
 		sendDefaultPii: true,
