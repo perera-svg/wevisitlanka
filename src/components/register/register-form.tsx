@@ -97,10 +97,12 @@ export function RegisterForm() {
 			</div>
 
 			{/* Header */}
-			<div className="flex flex-col gap-1">
-				<h1 className="text-xl font-bold text-gray-900">Create your account</h1>
+			<div className="flex flex-col gap-2">
+				<h1 className="text-2xl font-bold text-gray-900">
+					Create your account
+				</h1>
 				<p className="text-sm text-gray-500">
-					Join the Sri Lanka Tourism Business Portal
+					Register your business to start receiving bookings
 				</p>
 			</div>
 
@@ -174,7 +176,7 @@ export function RegisterForm() {
 									id={field.name}
 									name={field.name}
 									type="email"
-									placeholder="you@company.com"
+									placeholder="Enter your business email"
 									className="pl-9"
 									value={field.state.value}
 									onChange={(e) => field.handleChange(e.target.value)}
