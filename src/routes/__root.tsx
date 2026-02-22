@@ -1,6 +1,11 @@
-import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
-import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
+import {
+	createRootRoute,
+	HeadContent,
+	Scripts,
+	useLocation,
+} from "@tanstack/react-router";
+import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 
 import Header from "../components/Header";
 
@@ -32,7 +37,12 @@ export const Route = createRootRoute({
 	shellComponent: RootDocument,
 });
 
+const AUTH_ROUTES = ["/login", "/register", "/auth/callback"];
+
 function RootDocument({ children }: { children: React.ReactNode }) {
+	const { pathname } = useLocation();
+	const isAuthPage = AUTH_ROUTES.includes(pathname);
+
 	return (
 		<html lang="en">
 			<head>
@@ -40,7 +50,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 			</head>
 			<body>
 				<WorkOSProvider>
-					<Header />
+					{!isAuthPage && <Header />}
 					{children}
 					<TanStackDevtools
 						config={{

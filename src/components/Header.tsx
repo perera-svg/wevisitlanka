@@ -1,32 +1,70 @@
 import { Link } from "@tanstack/react-router";
-
-import WorkOSHeader from "./workos-user.tsx";
+import { CircleUserRound, Globe, Home, LogOut, Menu, X } from "lucide-react";
 
 import { useState } from "react";
-import { CircleUserRound, Globe, Home, Menu, X } from "lucide-react";
+import { useAuth } from "../integrations/workos/auth-context";
+import WorkOSHeader from "./workos-user.tsx";
 
 export default function Header() {
 	const [isOpen, setIsOpen] = useState(false);
+	const { user, isLoading, signOut } = useAuth();
 
 	return (
 		<>
-			<header className="p-4 flex items-center bg-gray-800 text-white shadow-lg">
-				<button
-					onClick={() => setIsOpen(true)}
-					className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
-					aria-label="Open menu"
-				>
-					<Menu size={24} />
-				</button>
-				<h1 className="ml-4 text-xl font-semibold">
-					<Link to="/">
-						<img
-							src="/tanstack-word-logo-white.svg"
-							alt="TanStack Logo"
-							className="h-10"
-						/>
-					</Link>
-				</h1>
+			<header className="p-4 flex items-center justify-between bg-gray-800 text-white shadow-lg">
+				<div className="flex items-center">
+					<button
+						type="button"
+						onClick={() => setIsOpen(true)}
+						className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
+						aria-label="Open menu"
+					>
+						<Menu size={24} />
+					</button>
+					<h1 className="ml-4 text-xl font-semibold">
+						<Link to="/">
+							<img
+								src="/tanstack-word-logo-white.svg"
+								alt="TanStack Logo"
+								className="h-10"
+							/>
+						</Link>
+					</h1>
+				</div>
+
+				<div className="flex items-center gap-3">
+					{isLoading ? null : user ? (
+						<>
+							<div className="flex items-center gap-2">
+								{user.profilePictureUrl && (
+									<img
+										src={user.profilePictureUrl}
+										alt={`${user.firstName} ${user.lastName}`}
+										className="w-8 h-8 rounded-full"
+									/>
+								)}
+								<span className="text-sm font-medium hidden sm:inline">
+									{user.firstName} {user.lastName}
+								</span>
+							</div>
+							<button
+								type="button"
+								onClick={() => signOut()}
+								className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
+								aria-label="Sign out"
+							>
+								<LogOut size={18} />
+							</button>
+						</>
+					) : (
+						<Link
+							to="/login"
+							className="px-4 py-2 text-sm bg-amber-500 hover:bg-amber-600 text-white font-medium rounded-lg transition-colors"
+						>
+							Sign In
+						</Link>
+					)}
+				</div>
 			</header>
 
 			<aside
@@ -37,6 +75,7 @@ export default function Header() {
 				<div className="flex items-center justify-between p-4 border-b border-gray-700">
 					<h2 className="text-xl font-bold">Navigation</h2>
 					<button
+						type="button"
 						onClick={() => setIsOpen(false)}
 						className="p-2 hover:bg-gray-800 rounded-lg transition-colors"
 						aria-label="Close menu"
