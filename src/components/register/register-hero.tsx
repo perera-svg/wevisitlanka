@@ -3,8 +3,7 @@ export function RegisterHero() {
 		<div
 			className="relative hidden h-full w-1/2 bg-cover bg-center lg:flex lg:flex-col lg:justify-end"
 			style={{
-				backgroundImage:
-					"url('https://images.unsplash.com/photo-1733937797040-3cd371a99892?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080')",
+				backgroundImage: "url('/images/register-hero.png')",
 			}}
 		>
 			<div className="mx-auto my-12 rounded-lg bg-black/40 p-6 max-w-4xl">

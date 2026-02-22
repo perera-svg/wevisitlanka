@@ -7,7 +7,15 @@
       "Bash(git push:*)",
       "Bash(gh pr create:*)",
       "Bash(gh pr view:*)",
-      "Bash(gh api:*)"
+      "Bash(gh api:*)",
+      "Bash(powershell -Command:*)",
+      "Bash(powershell -NoProfile -Command \"Get-NetTCPConnection -LocalPort 42069 -ErrorAction SilentlyContinue | Select-Object -ExpandProperty OwningProcess | ForEach-Object { Stop-Process -Id $_-Force }\")",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(taskkill:*)",
+      "Bash(powershell:*)",
+      "Bash(cross-env CI=true bun run e2e:*)",
+      "Bash(npx cross-env CI=true bun run e2e:*)"
     ]
   },
   "enabledPlugins": {
