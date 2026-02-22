@@ -10,7 +10,7 @@ export const env = createEnv({
 	server: {
 		SERVER_URL: z.string().url().optional(),
 		SENTRY_AUTH_TOKEN: z.string().min(1).optional(),
-		WORKOS_API_KEY: z.string().min(1).optional(),
+		WORKOS_API_KEY: z.string().min(1),
 	},
 
 	/**

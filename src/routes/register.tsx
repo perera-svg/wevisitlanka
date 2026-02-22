@@ -3,17 +3,20 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import { useAuth } from "@workos-inc/authkit-react";
 import { useEffect } from "react";
+import { z } from "zod";
 import { RegisterForm } from "@/components/register/register-form";
 import { RegisterHero } from "@/components/register/register-hero";
 
+const registerInputSchema = z.object({
+	email: z.string().email("Please enter a valid email address"),
+	password: z.string().min(8, "Password must be at least 8 characters"),
+	firstName: z.string().min(1, "First name is required"),
+	lastName: z.string(),
+});
+
 const registerUser = createServerFn({ method: "POST" })
-	.inputValidator(
-		(data: {
-			email: string;
-			password: string;
-			firstName: string;
-			lastName: string;
-		}) => data,
+	.inputValidator((data: z.input<typeof registerInputSchema>) =>
+		registerInputSchema.parse(data),
 	)
 	.handler(async ({ data }) => {
 		const { WorkOS } = await import("@workos-inc/node");
@@ -26,26 +29,22 @@ const registerUser = createServerFn({ method: "POST" })
 		return SentryServer.startSpan(
 			{ name: "workos.createUser", op: "auth.register" },
 			async () => {
-				const user = await workos.userManagement.createUser({
-					email: data.email,
-					password: data.password,
-					firstName: data.firstName,
-					lastName: data.lastName,
-				});
-
-				const authResponse =
-					await workos.userManagement.authenticateWithPassword({
+				try {
+					await workos.userManagement.createUser({
 						email: data.email,
 						password: data.password,
-						clientId: env.VITE_WORKOS_CLIENT_ID,
+						firstName: data.firstName,
+						lastName: data.lastName,
 					});
 
-				return {
-					success: true as const,
-					user,
-					accessToken: authResponse.accessToken,
-					refreshToken: authResponse.refreshToken,
-				};
+					return { success: true as const };
+				} catch (error) {
+					const message =
+						error instanceof Error
+							? error.message
+							: "Registration failed. Please try again.";
+					throw new Error(message);
+				}
 			},
 		);
 	});
@@ -74,7 +73,7 @@ function RegisterPage() {
 	}
 
 	return (
-		<div className="fixed inset-0 z-50 flex h-screen bg-white">
+		<div className="fixed inset-0 z-50 flex bg-white">
 			{/* Left Panel - Form */}
 			<div className="scrollbar-thin-hover flex flex-1 items-center justify-center overflow-y-auto px-8 py-12 lg:px-16">
 				<RegisterForm />

@@ -66,7 +66,7 @@ function CallbackPage() {
 					)}
 				</div>
 				<a
-					href="/register"
+					href="/"
 					className="text-sm font-medium text-teal-600 hover:underline"
 				>
 					Try again &rarr;

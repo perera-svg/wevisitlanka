@@ -28,7 +28,9 @@ export default function AppWorkOSProvider({
 			apiHostname={workosApiHostname}
 			redirectUri={redirectUri}
 			onRedirectCallback={({ state }) => {
-				navigate(state?.returnTo ?? { to: "/" });
+				if (state?.returnTo) {
+					navigate(state.returnTo);
+				}
 			}}
 		>
 			{children}

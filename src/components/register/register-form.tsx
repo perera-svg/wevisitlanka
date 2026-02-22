@@ -1,5 +1,4 @@
 import { useForm } from "@tanstack/react-form";
-import { useNavigate } from "@tanstack/react-router";
 import { useAuth } from "@workos-inc/authkit-react";
 import { Mail } from "lucide-react";
 import { useState } from "react";
@@ -33,7 +32,6 @@ const passwordSchema = z
 	.min(8, "Password must be at least 8 characters");
 
 export function RegisterForm() {
-	const navigate = useNavigate();
 	const { getSignInUrl } = useAuth();
 	const [serverError, setServerError] = useState<string | null>(null);
 
@@ -53,14 +51,9 @@ export function RegisterForm() {
 				return;
 			}
 
-			if (value.password !== value.confirmPassword) {
-				setServerError("Passwords do not match.");
-				return;
-			}
-
 			const nameParts = value.fullName.trim().split(/\s+/);
 			const firstName = nameParts[0] ?? "";
-			const lastName = nameParts.slice(1).join(" ") || firstName;
+			const lastName = nameParts.length > 1 ? nameParts.slice(1).join(" ") : "";
 
 			try {
 				await registerUser({
@@ -71,7 +64,8 @@ export function RegisterForm() {
 						lastName,
 					},
 				});
-				navigate({ to: "/" });
+				const signInUrl = await getSignInUrl();
+				window.location.assign(signInUrl);
 			} catch (error) {
 				if (error instanceof Error) {
 					setServerError(error.message);
@@ -108,17 +102,17 @@ export function RegisterForm() {
 					SL
 				</div>
 				<div>
-					<p className="text-lg font-bold text-gray-900">Sri Lanka Tourism</p>
-					<p className="text-[13px] text-gray-500">Business Portal</p>
+					<p className="text-lg font-bold text-foreground">Sri Lanka Tourism</p>
+					<p className="text-[13px] text-muted-foreground">Business Portal</p>
 				</div>
 			</div>
 
 			{/* Header */}
 			<div className="flex flex-col gap-2">
-				<h1 className="text-[28px] font-bold text-gray-900">
+				<h1 className="text-[28px] font-bold text-foreground">
 					Create your account
 				</h1>
-				<p className="text-sm text-gray-500">
+				<p className="text-sm text-muted-foreground">
 					Register your business to start receiving bookings
 				</p>
 			</div>
@@ -293,29 +287,23 @@ export function RegisterForm() {
 								id={field.name}
 								name={field.name}
 								type="checkbox"
-								className="mt-0.5 size-4 rounded border-gray-300 accent-amber-500"
+								className="mt-0.5 size-4 rounded border-border accent-amber-500"
 								checked={field.state.value}
 								onChange={(e) => field.handleChange(e.target.checked)}
 								onBlur={field.handleBlur}
 							/>
 							<label
 								htmlFor={field.name}
-								className="text-[13px] leading-relaxed text-gray-600"
+								className="text-[13px] leading-relaxed text-muted-foreground"
 							>
 								I agree to the{" "}
-								<a
-									href="/terms"
-									className="font-medium text-teal-600 hover:underline"
-								>
+								<span className="font-medium text-teal-600">
 									Terms of Service
-								</a>{" "}
+								</span>{" "}
 								and{" "}
-								<a
-									href="/privacy"
-									className="font-medium text-teal-600 hover:underline"
-								>
+								<span className="font-medium text-teal-600">
 									Privacy Policy
-								</a>
+								</span>
 							</label>
 						</div>
 					)}
@@ -347,7 +335,7 @@ export function RegisterForm() {
 			</form.Subscribe>
 
 			{/* Login Link */}
-			<p className="text-center text-sm text-gray-500">
+			<p className="text-center text-sm text-muted-foreground">
 				Already have an account?{" "}
 				<a href="/login" className="font-medium text-teal-600 hover:underline">
 					Sign in &rarr;

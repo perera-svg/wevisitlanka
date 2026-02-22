@@ -37,7 +37,7 @@ export function PasswordStrengthBar({ password }: { password: string }) {
 						key={`strength-${i}`}
 						className={cn(
 							"h-1 flex-1 rounded-full transition-colors",
-							i < score ? strengthColors[score - 1] : "bg-border",
+							i < score && score > 0 ? strengthColors[score - 1] : "bg-border",
 						)}
 					/>
 				))}

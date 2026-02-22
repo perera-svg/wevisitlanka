@@ -79,6 +79,7 @@ All env vars are validated at startup via T3Env (`src/env.ts`). If any required 
 - `VITE_SENTRY_PROJECT` — Sentry project slug
 - `VITE_WORKOS_CLIENT_ID` — WorkOS client ID
 - `VITE_WORKOS_API_HOSTNAME` — WorkOS API hostname
+- `WORKOS_API_KEY` — WorkOS API key (server-only, required for user registration)
 
 **Optional:**
 - `SENTRY_AUTH_TOKEN` — Sentry auth token (server-only).

@@ -81,5 +81,10 @@ test.describe("Register Page", () => {
 		await confirm.blur();
 
 		await expect(page.getByText("Passwords do not match")).toBeVisible();
+
+		// Submit button should still be enabled (form not submitted)
+		await expect(
+			page.getByRole("button", { name: "Create Account" }),
+		).toBeEnabled();
 	});
 });
