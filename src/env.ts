@@ -10,6 +10,7 @@ export const env = createEnv({
 	server: {
 		SERVER_URL: z.string().url().optional(),
 		SENTRY_AUTH_TOKEN: z.string().min(1).optional(),
+		WORKOS_API_KEY: z.string().min(1).optional(),
 	},
 
 	/**
@@ -35,6 +36,7 @@ export const env = createEnv({
 	runtimeEnvStrict: {
 		SERVER_URL: processEnv.SERVER_URL,
 		SENTRY_AUTH_TOKEN: processEnv.SENTRY_AUTH_TOKEN,
+		WORKOS_API_KEY: processEnv.WORKOS_API_KEY,
 		VITE_SENTRY_DSN:
 			viteRuntimeEnv.VITE_SENTRY_DSN ?? processEnv.VITE_SENTRY_DSN,
 		VITE_SENTRY_ORG:
