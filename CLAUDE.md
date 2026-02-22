@@ -17,6 +17,7 @@ bun run check                # Biome lint + format validation
 bun run format --write       # Auto-fix formatting
 bun run deploy               # Build + deploy to Cloudflare Workers
 bun run preview              # Serve production build locally
+bun run start                # Start production server (requires prior build)
 ```
 
 Pre-commit hook runs `biome check` on staged files via Husky + lint-staged. If a commit is blocked, run `bun run format --write`, re-stage, and commit again.
@@ -29,16 +30,19 @@ Pre-commit hook runs `biome check` on staged files via Husky + lint-staged. If a
 - `src/routes/__root.tsx` — App shell/layout, wraps content with `WorkOSProvider`.
 - `src/router.tsx` — Router creation + Sentry client initialization.
 - `instrument.server.mjs` — Sentry server-side initialization (copied to dist on build).
+- `src/env.ts` — T3Env environment variable validation (Zod schemas). Import `env` from `@/env` instead of reading `process.env` or `import.meta.env` directly.
 - `src/routeTree.gen.ts` — **Auto-generated, never edit manually.**
 - `src/components/` — React components.
 - `src/hooks/` — Custom React hooks.
 - `src/integrations/` — Third-party service integrations (WorkOS auth).
 - `tests/` — Playwright E2E tests.
+- `design/` — Design files (`.pen`) and generated images. Not part of the build.
 
 **Key integrations:**
 - **WorkOS AuthKit** for authentication (`src/integrations/workos/provider.tsx`, `src/hooks/useUser.tsx`)
 - **Sentry** for error monitoring (client in `router.tsx`, server in `instrument.server.mjs`)
 - **Tailwind CSS v4** via Vite plugin
+- **shadcn/ui ecosystem** — `class-variance-authority`, `clsx`, `tailwind-merge`, `tw-animate-css`, `@base-ui/react`, `@fontsource-variable/geist`
 
 ## Conventions
 
@@ -56,15 +60,30 @@ Pre-commit hook runs `biome check` on staged files via Husky + lint-staged. If a
 - Client-only code (auth, browser SDKs) must use `createClientOnlyFn` or route-level `ssr: false`.
 - `lucide-react` for icons, `zod` for validation.
 - Demo routes (`src/routes/demo/`) are examples that can be safely deleted.
+- Dev scripts use `cross-env` for Windows compatibility. If adding new scripts with env vars, use `cross-env` instead of inline `VAR=value`.
 
 ## Gotchas
 
-- **Build fails without Sentry env vars** — `VITE_SENTRY_PROJECT`, `VITE_SENTRY_ORG`, `SENTRY_AUTH_TOKEN` must be in `.env.local` or build crashes.
+- **Missing env vars fail at startup** — T3Env validates all required vars on import. If the app crashes immediately, check the Zod error for which var is missing.
 - `sentryTanstackStart` must be the **last Vite plugin** in `vite.config.ts`.
 - E2E tests run against `http://127.0.0.1:3000` (not `localhost`). Playwright tests all 3 browsers (Chromium, Firefox, WebKit).
 - Tailwind v4 syntax: `@import "tailwindcss"` in `src/styles.css` (not `@tailwind` directives).
 
 ## Environment Variables
 
-Required in `.env.local`: `VITE_SENTRY_ORG`, `VITE_SENTRY_PROJECT`, `SENTRY_AUTH_TOKEN`, `VITE_WORKOS_CLIENT_ID`, `VITE_WORKOS_API_HOSTNAME`. Optional (required to enable Sentry): `VITE_SENTRY_DSN`. Optional: `VITE_ENVIRONMENT`.
-`VITE_ENVIRONMENT` defaults to `"development"`. Set to `"production"` to reduce Sentry server-side sample rate.
+All env vars are validated at startup via T3Env (`src/env.ts`). If any required var is missing, the app fails immediately with a clear Zod error — no need to debug cryptic build failures.
+
+**Required in `.env.local`:**
+- `VITE_SENTRY_DSN` — Sentry DSN URL
+- `VITE_SENTRY_ORG` — Sentry organization slug
+- `VITE_SENTRY_PROJECT` — Sentry project slug
+- `VITE_WORKOS_CLIENT_ID` — WorkOS client ID
+- `VITE_WORKOS_API_HOSTNAME` — WorkOS API hostname
+
+**Optional:**
+- `SENTRY_AUTH_TOKEN` — Sentry auth token (server-only).
+- `VITE_ENVIRONMENT` — Defaults to `"development"`. Set to `"production"` to reduce Sentry server-side sample rate.
+- `VITE_APP_TITLE` — Application title override.
+- `SERVER_URL` — Server URL (server-only).
+
+Always use `import { env } from "@/env"` to access env vars — never `process.env` or `import.meta.env` directly.
